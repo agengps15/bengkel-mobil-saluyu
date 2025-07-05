@@ -33,21 +33,48 @@ class AdminController extends Controller
     }
 
     // Konfirmasi permintaan layanan
-    public function konfirmasiPermintaan($id)
+    public function konfirmasiPermintaan(Request $request, $id)
 {
+ 
     $booking = Booking::findOrFail($id);
 
     // Cari id status "Dikonfirmasi"
-    $statusDikonfirmasi = \App\Models\Status::where('nama_status', 'Dikonfirmasi')->first();
+    $status = \App\Models\Status::where('nama_status', $request->status)->first();
+    // $statusDikonfirmasi = \App\Models\Status::where('nama_status', 'Dikonfirmasi')->first();
+    $booking->tagihan = $request->tagihan;
+    $booking->rincian_biaya = $request->rincian_biaya;
 
-    if ($statusDikonfirmasi) {
-        $booking->status_id = $statusDikonfirmasi->id;
+    if ($status) {
+        $booking->status_id = $status->id;
         $booking->save();
-        return redirect()->route('admin.permintaan-layanan')->with('success', 'Permintaan layanan telah dikonfirmasi!');
+        return redirect()->route('admin.permintaan-layanan')->with('success', 'Status permintaan berhasil diperbarui!');
     } else {
-        return back()->with('error', 'Status Dikonfirmasi belum tersedia.');
+        return back()->with('error', 'Status tidak ditemukan.');
     }
 }
 
+// public function Tagihan(Request $request)
+//     {
+//         // Validasi input
+//         $validated = $request->validate([
+//             'tagihan' => 'required|numeric',
+//             'rincian_biaya' => 'required|string',
+//             'booking_id' => 'required|exists:bookings,id',
+//         ]);
 
+//         // Cari booking berdasarkan ID
+//         $booking = Booking::findOrFail($request->booking_id);
+
+//         // Update tagihan dan rincian biaya
+//         $booking->tagihan = $request->tagihan;
+//         $booking->rincian_biaya = $request->rincian_biaya;
+//         $booking->save();
+
+//         // Kembali ke halaman permintaan layanan dengan pesan sukses
+//         return redirect()->route('admin.permintaan-layanan')->with('success', 'Tagihan dan rincian biaya berhasil diperbarui!');
+//     }
 }
+
+
+
+

@@ -82,11 +82,12 @@
                 <tr>
                     <th>Tanggal</th>
                     <th>Layanan</th>
-                    <th>Nama Kendaraan</th>
+                    <th>Nama_Kendaraan</th>
                     <th>Model</th>
-                    <th>No Plat</th>
-                    <th>Tagihan & Rincian Biaya</th>
-                    <th>Bukti Pembayaran</th>
+                    <th>No_Plat</th>
+                    <th>Tagihan</th>
+                    <th>Rincian Biaya</th>
+                    <th>Bukti_Pembayaran</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
@@ -99,7 +100,22 @@
                     <td>{{ $booking->nama_kendaraan }}</td>
                     <td>{{ $booking->model_kendaraan }}</td>
                     <td>{{ $booking->no_plat }}</td>
-                    <td>{{ $booking->tagihan }}</td>
+                    <td>
+                           @if($booking->tagihan)
+                              Rp{{ number_format($booking->tagihan, 2, ',', '.') }}
+                          @else
+                              Belum ada tagihan
+                        @endif
+                    </td>
+
+                    <td>
+                          @if($booking->rincian_biaya)
+                            {{ $booking->rincian_biaya }}
+                         @else
+                            Belum ada rincian biaya
+                        @endif
+                     </td>
+
                     <td>
                         @if($booking->bukti_pembayaran)
                             <a href="{{ asset('uploads/bukti/'.$booking->bukti_pembayaran) }}" class="btn btn-primary" target="_blank">Lihat Bukti</a>

@@ -66,4 +66,5 @@ Route::post('/admin/permintaan-layanan/{id}/konfirmasi', [AdminController::class
 // Pastikan route ini ada dan mengarah ke controller yang sesuai
 // Route::get('/admin/daftar_permintaan', [BookingController::class, 'riwayatAdmin'])->name('admin.daftar-permintaan')->middleware('auth');
 
-
+Route::post('/admin/permintaan-layanan/{id}/tagihan', [AdminController::class, 'Tagihan'])
+    ->name('admin.permintaan-layanan.inputTagihan');
